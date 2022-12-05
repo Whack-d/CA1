@@ -9,7 +9,7 @@ class CommandQueue;
 class Player
 {
 public:
-	Player();
+	Player(bool isPlayer1);
 	void HandleEvent(const sf::Event& event, CommandQueue& command);
 	void HandleRealtimeInput(CommandQueue& command);
 
@@ -17,7 +17,7 @@ public:
 	sf::Keyboard::Key GetAssignedKey(Action action) const;
 
 private:
-	void InitializeActions();
+	void InitializeActions(bool isPlayer1);
 	static bool IsRealtimeAction(Action action);
 
 private:
