@@ -28,8 +28,8 @@ public:
 private:
 	void LoadTextures();
 	void BuildScene();
-	void AdaptPlayerPosition();
-	void AdaptPlayerVelocity();
+	void AdaptPlayerPosition(Aircraft* player);
+	void AdaptPlayerVelocity(Aircraft* player);
 
 private:
 	sf::RenderWindow& m_window;
@@ -43,7 +43,7 @@ private:
 
 	sf::FloatRect m_world_bounds;
 	sf::Vector2f m_spawn_position;
-	float m_scrollspeed;
 	Aircraft* m_player_aircraft;
+	Aircraft* m_player_aircraft2;
 };
 

@@ -8,10 +8,15 @@ std::vector<AircraftData> InitializeAircraftData()
 {
     std::vector<AircraftData> data(static_cast<int>(AircraftType::kAircraftCount));
 
-    data[static_cast<int>(AircraftType::kEagle)].m_hitpoints = 100;
-    data[static_cast<int>(AircraftType::kEagle)].m_speed = 200.f;
-    data[static_cast<int>(AircraftType::kEagle)].m_fire_interval = sf::seconds(1);
-    data[static_cast<int>(AircraftType::kEagle)].m_texture = Texture::kEagle;
+    data[static_cast<int>(AircraftType::kCharacter)].m_hitpoints = 100;
+    data[static_cast<int>(AircraftType::kCharacter)].m_speed = 200.f;
+    data[static_cast<int>(AircraftType::kCharacter)].m_fire_interval = sf::seconds(1);
+    data[static_cast<int>(AircraftType::kCharacter)].m_texture = Texture::kCharacter;
+
+    data[static_cast<int>(AircraftType::kCharacter2)].m_hitpoints = 100;
+    data[static_cast<int>(AircraftType::kCharacter2)].m_speed = 200.f;
+    data[static_cast<int>(AircraftType::kCharacter2)].m_fire_interval = sf::seconds(1);
+    data[static_cast<int>(AircraftType::kCharacter2)].m_texture = Texture::kCharacter2;
 
     data[static_cast<int>(AircraftType::kRaptor)].m_hitpoints = 20;
     data[static_cast<int>(AircraftType::kRaptor)].m_speed = 80.f;

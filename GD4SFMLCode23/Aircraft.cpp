@@ -22,6 +22,12 @@ Texture ToTextureID(AircraftType type)
 	case AircraftType::kRaptor:
 		return Texture::kRaptor;
 		break;
+	case AircraftType::kCharacter:
+		return Texture::kCharacter;
+		break;
+	case AircraftType::kCharacter2:
+		return Texture::kCharacter2;
+		break;
 	}
 	return Texture::kEagle;
 }
@@ -61,8 +67,10 @@ unsigned int Aircraft::GetCategory() const
 {
 	switch (m_type)
 	{
-	case AircraftType::kEagle:
+	case AircraftType::kCharacter:
 		return static_cast<unsigned int>(ReceiverCategories::kPlayerAircraft);
+	case AircraftType::kCharacter2:
+		return static_cast<unsigned int>(ReceiverCategories::kPlayerAircraft2);
 	default:
 		return static_cast<unsigned int>(ReceiverCategories::kEnemyAircraft);
 
@@ -96,7 +104,7 @@ void Aircraft::UpdateTexts()
 	m_health_display->setPosition(0.f, 50.f);
 	m_health_display->setRotation(-getRotation());
 
-	if (m_missile_ammo)
+	if (m_missile_display)
 	{
 		if (m_missile_ammo == 0)
 		{
