@@ -18,40 +18,35 @@ struct AircraftMover
     sf::Vector2f velocity;
 };
 
-Player::Player(bool isPlayer1)
+Player::Player()
 {
-    if (isPlayer1) {
-        //Set initial key bindings
-        m_key_binding[sf::Keyboard::Left] = Action::kMoveLeft;
-        m_key_binding[sf::Keyboard::Right] = Action::kMoveRight;
-        m_key_binding[sf::Keyboard::Up] = Action::kMoveUp;
-        m_key_binding[sf::Keyboard::Down] = Action::kMoveDown;
+    //Set initial key bindings
+    m_key_binding[sf::Keyboard::Left] = Action::kMoveLeft;
+    m_key_binding[sf::Keyboard::Right] = Action::kMoveRight;
+    m_key_binding[sf::Keyboard::Up] = Action::kMoveUp;
+    m_key_binding[sf::Keyboard::Down] = Action::kMoveDown;
 
-        //Set initial action bindings
-        InitializeActions(isPlayer1);
+    //Player2
+    m_key_binding[sf::Keyboard::A] = Action::kMoveLeft2;
+    m_key_binding[sf::Keyboard::D] = Action::kMoveRight2;
+    m_key_binding[sf::Keyboard::W] = Action::kMoveUp2;
+    m_key_binding[sf::Keyboard::S] = Action::kMoveDown2;
 
-        //Assign all categories to a player's aircraft
-        for (auto& pair : m_action_binding)
-        {
-            pair.second.category = static_cast<unsigned int>(ReceiverCategories::kPlayerAircraft);
-        }
+    //Set initial action bindings
+    InitializeActions();
+
+    //Assign all categories to player1
+    for (auto& pair : m_action_binding)
+    {
+        pair.second.category = static_cast<unsigned int>(ReceiverCategories::kPlayerAircraft);
     }
-    else {
-        //Set initial key bindings
-        m_key_binding[sf::Keyboard::A] = Action::kMoveLeft;
-        m_key_binding[sf::Keyboard::D] = Action::kMoveRight;
-        m_key_binding[sf::Keyboard::W] = Action::kMoveUp;
-        m_key_binding[sf::Keyboard::S] = Action::kMoveDown;
 
-        //Set initial action bindings
-        InitializeActions(isPlayer1);
-
-        //Assign all categories to a player's aircraft
-        for (auto& pair : m_action_binding)
-        {
-            pair.second.category = static_cast<unsigned int>(ReceiverCategories::kPlayerAircraft2);
-        }
+    //Assign all categories to a player2
+    for (auto& pair : m_action_binding2)
+    {
+        pair.second.category = static_cast<unsigned int>(ReceiverCategories::kPlayerAircraft2);
     }
+    
     
 
 }
@@ -65,6 +60,7 @@ void Player::HandleEvent(const sf::Event& event, CommandQueue& command)
         if (found != m_key_binding.end() && !IsRealtimeAction(found->second))
         {
             command.Push(m_action_binding[found->second]);
+            command.Push(m_action_binding2[found->second]);
         }
     }
 }
@@ -77,6 +73,7 @@ void Player::HandleRealtimeInput(CommandQueue& command)
         if (sf::Keyboard::isKeyPressed(pair.first) && IsRealtimeAction(pair.second))
         {
             command.Push(m_action_binding[pair.second]);
+            command.Push(m_action_binding2[pair.second]);
         }
     }
 }
@@ -110,21 +107,18 @@ sf::Keyboard::Key Player::GetAssignedKey(Action action) const
     return sf::Keyboard::Unknown;
 }
 
-void Player::InitializeActions(bool isPlayer1)
+void Player::InitializeActions()
 {
     const float kPlayerSpeed = 200.f;
-    if (isPlayer1) {
-        m_action_binding[Action::kMoveLeft].action = DerivedAction<Aircraft>(AircraftMover(-kPlayerSpeed, 0.f));
-        m_action_binding[Action::kMoveRight].action = DerivedAction<Aircraft>(AircraftMover(kPlayerSpeed, 0.f));
-        m_action_binding[Action::kMoveUp].action = DerivedAction<Aircraft>(AircraftMover(0.f, -kPlayerSpeed));
-        m_action_binding[Action::kMoveDown].action = DerivedAction<Aircraft>(AircraftMover(0.f, kPlayerSpeed));
-    }
-    else {
-        m_action_binding[Action::kMoveLeft2].action = DerivedAction<Aircraft>(AircraftMover(-kPlayerSpeed, 0.f));
-        m_action_binding[Action::kMoveRight2].action = DerivedAction<Aircraft>(AircraftMover(kPlayerSpeed, 0.f));
-        m_action_binding[Action::kMoveUp2].action = DerivedAction<Aircraft>(AircraftMover(0.f, -kPlayerSpeed));
-        m_action_binding[Action::kMoveDown2].action = DerivedAction<Aircraft>(AircraftMover(0.f, kPlayerSpeed));
-    }
+    m_action_binding[Action::kMoveLeft].action = DerivedAction<Aircraft>(AircraftMover(-kPlayerSpeed, 0.f));
+    m_action_binding[Action::kMoveRight].action = DerivedAction<Aircraft>(AircraftMover(kPlayerSpeed, 0.f));
+    m_action_binding[Action::kMoveUp].action = DerivedAction<Aircraft>(AircraftMover(0.f, -kPlayerSpeed));
+    m_action_binding[Action::kMoveDown].action = DerivedAction<Aircraft>(AircraftMover(0.f, kPlayerSpeed));
+
+    m_action_binding2[Action::kMoveLeft2].action = DerivedAction<Aircraft>(AircraftMover(-kPlayerSpeed, 0.f));
+    m_action_binding2[Action::kMoveRight2].action = DerivedAction<Aircraft>(AircraftMover(kPlayerSpeed, 0.f));
+    m_action_binding2[Action::kMoveUp2].action = DerivedAction<Aircraft>(AircraftMover(0.f, -kPlayerSpeed));
+    m_action_binding2[Action::kMoveDown2].action = DerivedAction<Aircraft>(AircraftMover(0.f, kPlayerSpeed));
     
 }
 
