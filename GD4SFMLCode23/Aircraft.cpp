@@ -70,7 +70,7 @@ unsigned int Aircraft::GetCategory() const
 	case AircraftType::kCharacter:
 		return static_cast<unsigned int>(ReceiverCategories::kPlayerAircraft);
 	case AircraftType::kCharacter2:
-		return static_cast<unsigned int>(ReceiverCategories::kPlayerAircraft2);
+		return static_cast<unsigned int>(ReceiverCategories::kPlayerAircraft);
 	default:
 		return static_cast<unsigned int>(ReceiverCategories::kEnemyAircraft);
 

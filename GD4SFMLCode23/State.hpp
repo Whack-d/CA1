@@ -21,12 +21,11 @@ public:
 
 	struct Context
 	{
-		Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player, Player& player2);
+		Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player);
 		sf::RenderWindow* window;
 		TextureHolder* textures;
 		FontHolder* fonts;
 		Player* player;
-		Player* player2;
 	};
 
 public:
