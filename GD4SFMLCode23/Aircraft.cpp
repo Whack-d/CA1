@@ -122,6 +122,12 @@ float Aircraft::GetMaxSpeed() const
 	return Table[static_cast<int>(m_type)].m_speed;
 }
 
+void Aircraft::SetHitbox(sf::Vector2f position, sf::Vector2f size)
+{
+	hitBox = { position, size };
+	hurtBox = { sf::Vector2f(position.x + 50, position.y), size};
+}
+
 void Aircraft::DrawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(m_sprite, states);
@@ -131,4 +137,7 @@ void Aircraft::UpdateCurrent(sf::Time dt, CommandQueue& commands)
 {
 	UpdateTexts();
 	Entity::UpdateCurrent(dt, commands);
+
+	//Update hitbox and hurtbox
+	getTransform().transformRect(hitBox);
 }

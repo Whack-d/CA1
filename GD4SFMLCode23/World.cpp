@@ -25,6 +25,7 @@ void World::Update(sf::Time dt)
 	m_player_aircraft->SetVelocity(0.f, 0.f);
 	m_player_aircraft2->SetVelocity(0.f, 0.f);
 
+
 	//Forward the commands to the scenegraph, sort out velocity
 	while (!m_command_queue.IsEmpty())
 	{
@@ -36,6 +37,14 @@ void World::Update(sf::Time dt)
 	m_scenegraph.Update(dt, m_command_queue);
 	AdaptPlayerPosition(m_player_aircraft);
 	AdaptPlayerPosition(m_player_aircraft2);
+
+	if (m_player_aircraft->hurtBox.intersects(m_player_aircraft2->hitBox)) {
+		m_player_aircraft->GainPoints(1);
+	}
+
+	if (m_player_aircraft2->hurtBox.intersects(m_player_aircraft->hitBox)) {
+		m_player_aircraft2->GainPoints(1);
+	}
 }
 
 void World::Draw()
@@ -92,15 +101,10 @@ void World::BuildScene()
 
 	m_scene_layers[static_cast<int>(Layers::kAir)]->AttachChild(std::move(player2));
 
-	/*std::unique_ptr<Aircraft> left_escort(new Aircraft(AircraftType::kRaptor, m_textures, m_fonts));
-	left_escort->setPosition(-80.f, 50.f);
-	m_player_aircraft->AttachChild(std::move(left_escort));
-
-	std::unique_ptr<Aircraft> right_escort(new Aircraft(AircraftType::kRaptor, m_textures, m_fonts));
-	right_escort->setPosition(80.f, 50.f);
-	m_player_aircraft->AttachChild(std::move(right_escort));*/
-
-
+	//Add their hitboxes
+	m_player_aircraft->SetHitbox(sf::Vector2f(100,100), sf::Vector2f(20, 20));
+	m_player_aircraft2->SetHitbox((sf::Vector2f(m_spawn_position.x + 100.f, m_spawn_position.y)), sf::Vector2f(20, 20));
+	
 }
 
 void World::AdaptPlayerPosition(Aircraft* player)

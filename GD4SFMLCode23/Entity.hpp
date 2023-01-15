@@ -16,6 +16,9 @@ public:
 	void GainPoints(unsigned int points);
 	void LosePoints(unsigned int points);
 
+	sf::FloatRect hitBox;
+	sf::FloatRect hurtBox;
+
 
 protected:
 	virtual void UpdateCurrent(sf::Time dt, CommandQueue& commands);
