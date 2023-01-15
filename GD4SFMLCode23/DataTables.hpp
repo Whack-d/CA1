@@ -17,7 +17,7 @@ struct Direction
 
 struct AircraftData
 {
-	int m_hitpoints;
+	int m_score;
 	float m_speed;
 	Texture m_texture;
 	sf::Time m_fire_interval;

@@ -2,7 +2,7 @@
 #include <cassert>
 
 Entity::Entity(int hitpoints)
-    : m_hitpoints(hitpoints)
+    : m_score(hitpoints)
 {
 }
 
@@ -33,32 +33,22 @@ void Entity::Accelerate(float vx, float vy)
     m_velocity.y += vy;
 }
 
-int Entity::GetHitPoints() const
+int Entity::GetScore() const
 {
-    return m_hitpoints;
+    return m_score;
 }
 
-void Entity::Repair(unsigned int points)
+void Entity::GainPoints(unsigned int points)
 {
     assert(points > 0);
     //TODO Limit hitpoints
-    m_hitpoints += points;
+    m_score += points;
 }
 
-void Entity::Damage(unsigned int points)
+void Entity::LosePoints(unsigned int points)
 {
     assert(points > 0);
-    m_hitpoints -= points;
-}
-
-void Entity::Destroy()
-{
-    m_hitpoints = 0;
-}
-
-bool Entity::IsDestroyed() const
-{
-    return m_hitpoints <=0;
+    m_score -= points;
 }
 
 void Entity::UpdateCurrent(sf::Time dt, CommandQueue& commands)
