@@ -1,6 +1,7 @@
 #include "Countdown.hpp"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
+#include "SFML/System/Clock.hpp"
 
 
 Countdown::Countdown(const FontHolder& font) : Entity(5)
@@ -14,19 +15,25 @@ Countdown::Countdown(const FontHolder& font) : Entity(5)
 	UpdateText();
 }
 
-int Countdown::GetCountdown()
+float Countdown::GetCountdown()
 {
 	return m_countdown;
 }
 
+void Countdown::UpdateCountdown(sf::Time dt) 
+{
+	m_countdown -= dt.asSeconds();
+}
+
 void Countdown::UpdateText() 
 {
-	m_countdown_display->SetString(std::to_string(GetCountdown()) + " Seconds Left!");
+	m_countdown_display->SetString(std::to_string((int)GetCountdown()) + " Seconds Left!");
 
 }
 
 void Countdown::UpdateCurrent(sf::Time dt, CommandQueue& commands)
 {
+	UpdateCountdown(dt);
 	UpdateText();
 	Entity::UpdateCurrent(dt, commands);
 }
