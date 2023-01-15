@@ -13,7 +13,6 @@ public:
 
 	void IncreaseFireRate();
 	void IncreaseFireSpread();
-	void CollectMissiles(unsigned int count);
 	void UpdateTexts();
 	void UpdateMovementPattern(sf::Time dt);
 	float GetMaxSpeed() const;
@@ -28,9 +27,7 @@ private:
 
 	unsigned int m_fire_rate;
 	unsigned int m_spread_level;
-	unsigned int m_missile_ammo;
-	TextNode* m_health_display;
-	TextNode* m_missile_display;
+	TextNode* m_score_display;
 	float m_travelled_distance;
 	int m_directions_index;
 };

@@ -8,16 +8,17 @@ std::vector<AircraftData> InitializeAircraftData()
 {
     std::vector<AircraftData> data(static_cast<int>(AircraftType::kAircraftCount));
 
-    data[static_cast<int>(AircraftType::kCharacter)].m_hitpoints = 100;
+    data[static_cast<int>(AircraftType::kCharacter)].m_score = 0;
     data[static_cast<int>(AircraftType::kCharacter)].m_speed = 200.f;
     data[static_cast<int>(AircraftType::kCharacter)].m_fire_interval = sf::seconds(1);
     data[static_cast<int>(AircraftType::kCharacter)].m_texture = Texture::kCharacter;
 
-    data[static_cast<int>(AircraftType::kCharacter2)].m_hitpoints = 100;
+    data[static_cast<int>(AircraftType::kCharacter2)].m_score = 0;
     data[static_cast<int>(AircraftType::kCharacter2)].m_speed = 200.f;
     data[static_cast<int>(AircraftType::kCharacter2)].m_fire_interval = sf::seconds(1);
     data[static_cast<int>(AircraftType::kCharacter2)].m_texture = Texture::kCharacter2;
 
+    /*
     data[static_cast<int>(AircraftType::kRaptor)].m_hitpoints = 20;
     data[static_cast<int>(AircraftType::kRaptor)].m_speed = 80.f;
     data[static_cast<int>(AircraftType::kRaptor)].m_fire_interval = sf::Time::Zero;
@@ -39,6 +40,7 @@ std::vector<AircraftData> InitializeAircraftData()
     data[static_cast<int>(AircraftType::kAvenger)].m_directions.emplace_back(Direction(-45.f, 100.f));
     data[static_cast<int>(AircraftType::kAvenger)].m_directions.emplace_back(Direction(0.f, 50.f));
     data[static_cast<int>(AircraftType::kAvenger)].m_directions.emplace_back(Direction(+45.f, 50.f));
+    */
     return data;
 }
 
@@ -65,10 +67,7 @@ std::vector<PickupData> InitializePickupData()
     std::vector<PickupData> data(static_cast<int>(PickupType::kPickupCount));
 
     data[static_cast<int>(PickupType::kHealthRefill)].m_texture = Texture::kHealthRefill;
-    data[static_cast<int>(PickupType::kHealthRefill)].m_action = [](Aircraft& a) {a.Repair(25); };
-
-    data[static_cast<int>(PickupType::kMissileRefill)].m_texture = Texture::kMissileRefill;
-    data[static_cast<int>(PickupType::kMissileRefill)].m_action = std::bind(&Aircraft::CollectMissiles, std::placeholders::_1, 3);
+    data[static_cast<int>(PickupType::kHealthRefill)].m_action = [](Aircraft& a) {a.GainPoints(25); };
 
     data[static_cast<int>(PickupType::kFireSpread)].m_texture = Texture::kFireSpread;
     data[static_cast<int>(PickupType::kFireSpread)].m_action = std::bind(&Aircraft::IncreaseFireSpread, std::placeholders::_1);

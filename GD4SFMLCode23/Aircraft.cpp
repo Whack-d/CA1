@@ -33,14 +33,12 @@ Texture ToTextureID(AircraftType type)
 }
 
 Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontHolder& fonts) 
-	: Entity(Table[static_cast<int>(type)].m_hitpoints)
+	: Entity(Table[static_cast<int>(type)].m_score)
 	, m_type(type) 
 	, m_sprite(textures.Get(ToTextureID(type)))
 	, m_fire_rate(1)
 	, m_spread_level(1)
-	, m_missile_ammo(2)
-	, m_health_display(nullptr)
-	, m_missile_display(nullptr)
+	, m_score_display(nullptr)
 	, m_travelled_distance(0.f)
 	, m_directions_index(0)
 {
@@ -48,17 +46,10 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 	m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 	std::string empty_string = "";
 
-	std::unique_ptr<TextNode> health_display(new TextNode(fonts, empty_string));
-	m_health_display = health_display.get();
-	AttachChild(std::move(health_display));
+	std::unique_ptr<TextNode> score_display(new TextNode(fonts, empty_string));
+	m_score_display = score_display.get();
+	AttachChild(std::move(score_display));
 
-	if (GetCategory() == static_cast<int>(ReceiverCategories::kPlayerAircraft))
-	{
-		std::unique_ptr<TextNode> missile_display(new TextNode(fonts, empty_string));
-		missile_display->setPosition(0, 70);
-		m_missile_display = missile_display.get();
-		AttachChild(std::move(missile_display));
-	}
 	UpdateTexts();
 
 }
@@ -93,28 +84,11 @@ void Aircraft::IncreaseFireSpread()
 	}
 }
 
-void Aircraft::CollectMissiles(unsigned int count)
-{
-	m_missile_ammo += count;
-}
-
 void Aircraft::UpdateTexts()
 {
-	m_health_display->SetString(std::to_string(GetHitPoints()) + "HP");
-	m_health_display->setPosition(0.f, 50.f);
-	m_health_display->setRotation(-getRotation());
-
-	if (m_missile_display)
-	{
-		if (m_missile_ammo == 0)
-		{
-			m_missile_display->SetString("");
-		}
-		else
-		{
-			m_missile_display->SetString("M: " + std::to_string(m_missile_ammo));
-		}
-	}
+	m_score_display->SetString(std::to_string(GetScore()) + " POINTS");
+	m_score_display->setPosition(0.f, 50.f);
+	m_score_display->setRotation(-getRotation());
 }
 
 void Aircraft::UpdateMovementPattern(sf::Time dt)
