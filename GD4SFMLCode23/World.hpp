@@ -5,6 +5,7 @@
 #include "SpriteNode.hpp"
 #include "Aircraft.hpp"
 #include "Layers.hpp"
+#include "Countdown.hpp"
 
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/Graphics/View.hpp>
@@ -30,6 +31,7 @@ private:
 	void BuildScene();
 	void AdaptPlayerPosition(Aircraft* player);
 	void AdaptPlayerVelocity(Aircraft* player);
+	void UpdateText();
 
 private:
 	sf::RenderWindow& m_window;
@@ -45,5 +47,6 @@ private:
 	sf::Vector2f m_spawn_position;
 	Aircraft* m_player_aircraft;
 	Aircraft* m_player_aircraft2;
+	Countdown* m_countdown;
 };
 
