@@ -12,7 +12,10 @@ World::World(sf::RenderWindow& window, FontHolder& font)
 	,m_spawn_position(m_camera.getSize().x/2.f, m_world_bounds.height - m_camera.getSize().y/2.f)
 	,m_player_aircraft(nullptr)
 	,m_player_aircraft2(nullptr)
+	,m_countdown(nullptr)
+
 {
+
 	LoadTextures();
 	BuildScene();
 
@@ -92,6 +95,13 @@ void World::BuildScene()
 
 	m_scene_layers[static_cast<int>(Layers::kAir)]->AttachChild(std::move(player2));
 
+	//Add countdown
+	std::unique_ptr<Countdown> countdown(new Countdown(m_fonts));
+	m_countdown = countdown.get();
+	m_countdown->setPosition(sf::Vector2f(m_spawn_position.x, m_spawn_position.y - 300));
+
+	m_scene_layers[static_cast<int>(Layers::kAir)]->AttachChild(std::move(countdown));
+
 	/*std::unique_ptr<Aircraft> left_escort(new Aircraft(AircraftType::kRaptor, m_textures, m_fonts));
 	left_escort->setPosition(-80.f, 50.f);
 	m_player_aircraft->AttachChild(std::move(left_escort));
@@ -117,8 +127,6 @@ void World::AdaptPlayerPosition(Aircraft* player)
 	player->setPosition(position);
 
 }
-
-
 
 void World::AdaptPlayerVelocity(Aircraft* player)
 {
