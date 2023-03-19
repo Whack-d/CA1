@@ -148,6 +148,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneNode.cpp" />
     <ClCompile Include="SettingsState.cpp" />
+    <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="SpriteNode.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateStack.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="Font.hpp" />
     <ClInclude Include="GameState.hpp" />
     <ClInclude Include="Countdown.hpp" />
+    <ClInclude Include="GameOverState.hpp" />
     <ClInclude Include="InputNotes.hpp" />
     <ClInclude Include="Label.hpp" />
     <ClInclude Include="Layers.hpp" />

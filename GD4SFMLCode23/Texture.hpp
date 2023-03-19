@@ -16,5 +16,6 @@ enum class Texture
 	kFireSpread,
 	kFireRate,
 	kCharacter,
-	kCharacter2
+	kCharacter2,
+	kGameOver
 };

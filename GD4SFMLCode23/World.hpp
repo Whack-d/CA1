@@ -25,6 +25,7 @@ public:
 	void Update(sf::Time dt);
 	void Draw();
 	CommandQueue& GetCommandQueue();
+	float GetWorldCountdown();
 
 private:
 	void LoadTextures();
@@ -32,6 +33,7 @@ private:
 	void AdaptPlayerPosition(Aircraft* player);
 	void AdaptPlayerVelocity(Aircraft* player);
 	void UpdateText();
+
 
 private:
 	sf::RenderWindow& m_window;

@@ -6,7 +6,7 @@
 
 Countdown::Countdown(const FontHolder& font) : Entity(5)
 {
-	m_countdown = 100;
+	m_countdown = 10;
 	std::string empty_string = "";
 	std::unique_ptr<TextNode> score_display(new TextNode(font, empty_string));
 	m_countdown_display = score_display.get();

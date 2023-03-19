@@ -138,3 +138,7 @@ void World::AdaptPlayerVelocity(Aircraft* player)
 		player->SetVelocity(velocity / std::sqrt(2.f));
 	}
 }
+
+float World::GetWorldCountdown() {
+	return m_countdown->GetCountdown();
+}

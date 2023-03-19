@@ -5,6 +5,7 @@
 #include "GameState.hpp"
 #include "PauseState.hpp"
 #include "SettingsState.hpp"
+#include "GameOverState.hpp"
 
 const sf::Time Application::kTimePerFrame = sf::seconds(1.f / 60.f);
 
@@ -19,6 +20,7 @@ Application::Application()
 	m_textures.Load(Texture::kButtonNormal, "Media/Textures/ButtonNormal.png");
 	m_textures.Load(Texture::kButtonSelected, "Media/Textures/ButtonSelected.png");
 	m_textures.Load(Texture::kButtonPressed, "Media/Textures/ButtonPressed.png");
+	m_textures.Load(Texture::kGameOver, "Media/Textures/GameOver.jpg");
 
 	RegisterStates();
 	m_stack.PushState(StateID::kTitle);
@@ -79,4 +81,5 @@ void Application::RegisterStates()
 	m_stack.RegisterState<GameState>(StateID::kGame);
 	m_stack.RegisterState<PauseState>(StateID::kPause);
 	m_stack.RegisterState<SettingsState>(StateID::kSettings);
+	m_stack.RegisterState<GameOverState>(StateID::kGameOver);
 }
