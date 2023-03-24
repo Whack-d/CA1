@@ -7,7 +7,6 @@ GameState::GameState(StateStack& stack, Context context)
     , m_world(*context.window, *context.fonts, *context.sounds, false)
     , m_player(*context.player)
     , gameIsOver(false)
-    //, m_player2(*context.player2)
 {
 }
 
@@ -33,7 +32,6 @@ bool GameState::HandleEvent(const sf::Event& event)
 {
     CommandQueue& commands = m_world.GetCommandQueue();
     m_player.HandleEvent(event, commands);
-    //m_player2.HandleEvent(event, commands);
 
     //Escape should bring up the pause menu
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)

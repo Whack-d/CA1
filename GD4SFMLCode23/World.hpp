@@ -14,7 +14,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-
+#include <SFML/Window/Mouse.hpp>
 
 #include <array>
 #include "CommandQueue.hpp"
@@ -56,7 +56,6 @@ private:
 	sf::FloatRect m_world_bounds;
 	sf::Vector2f m_spawn_position;
 	Aircraft* m_player_aircraft;
-	Aircraft* m_player_aircraft2;
 	Countdown* m_countdown;
 };
 

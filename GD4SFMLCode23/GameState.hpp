@@ -14,6 +14,5 @@ private:
 	World m_world;
 	Player& m_player;
 	bool gameIsOver;
-	//Player& m_player2;
 };
 
