@@ -5,6 +5,7 @@ GameState::GameState(StateStack& stack, Context context)
     : State(stack, context)
     , m_world(*context.window, *context.fonts)
     , m_player(*context.player)
+    , gameIsOver(false)
     //, m_player2(*context.player2)
 {
 }
@@ -19,6 +20,11 @@ bool GameState::Update(sf::Time dt)
     m_world.Update(dt);
     CommandQueue& commands = m_world.GetCommandQueue();
     m_player.HandleRealtimeInput(commands);
+    if (m_world.GetWorldCountdown() <= 0 && !gameIsOver)
+    {
+        gameIsOver = true;
+		RequestStackPush(StateID::kGameOver);
+	}
     return true;
 }
 
