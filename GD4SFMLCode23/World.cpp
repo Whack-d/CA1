@@ -1,4 +1,5 @@
 #include "World.hpp"
+#include <iostream>
 
 
 World::World(sf::RenderWindow& window, FontHolder& font)
@@ -25,7 +26,7 @@ void World::Update(sf::Time dt)
 {
 	//TODO fix velocity
 	m_player_aircraft->SetVelocity(0.f, 0.f);
-
+	sf::Vector2<int> mousePos = sf::Mouse::getPosition(m_window);
 
 	//Forward the commands to the scenegraph, sort out velocity
 	while (!m_command_queue.IsEmpty())
@@ -36,6 +37,9 @@ void World::Update(sf::Time dt)
 
 	m_scenegraph.Update(dt, m_command_queue);
 	AdaptPlayerPosition(m_player_aircraft);
+	std::cout << m_player_aircraft->FindMouse(mousePos, m_window) << std::endl;
+	m_player_aircraft->RotateSprite(m_player_aircraft->FindMouse(mousePos, m_window));
+	std::cout << m_player_aircraft->GetSprite().getRotation() << std::endl;
 }
 
 void World::Draw()

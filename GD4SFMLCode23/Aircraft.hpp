@@ -4,6 +4,7 @@
 #include "ResourceIdentifiers.hpp"
 #include <SFML/Graphics/Sprite.hpp>
 #include "TextNode.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
 
 class Aircraft : public Entity
 {
@@ -17,6 +18,9 @@ public:
 	void UpdateMovementPattern(sf::Time dt);
 	float GetMaxSpeed() const;
 	void SetHitbox(sf::Vector2f position, sf::Vector2f size);
+	float FindMouse(sf::Vector2<int> mousePos, sf::RenderWindow& window);
+	void RotateSprite(float rotation);
+	sf::Sprite GetSprite();
 
 private:
 	virtual void DrawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
