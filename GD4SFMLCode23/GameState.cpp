@@ -1,9 +1,10 @@
 #include "GameState.hpp"
 #include "Player.hpp"
+#include <iostream>
 
 GameState::GameState(StateStack& stack, Context context)
     : State(stack, context)
-    , m_world(*context.window, *context.fonts)
+    , m_world(*context.window, *context.fonts, *context.sounds, false)
     , m_player(*context.player)
     , gameIsOver(false)
     //, m_player2(*context.player2)

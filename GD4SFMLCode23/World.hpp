@@ -5,23 +5,31 @@
 #include "SpriteNode.hpp"
 #include "Aircraft.hpp"
 #include "Layers.hpp"
-#include "Countdown.hpp"
+//#include "NetworkNode.hpp"
+#include "NetworkProtocol.hpp"
+#include "PickupType.hpp"
 
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
 
 #include <array>
 #include "CommandQueue.hpp"
 
+#include "BloomEffect.hpp"
+#include "SoundPlayer.hpp"
+
+#include "Countdown.hpp"
+
 
 
 class World : private sf::NonCopyable
 {
 public:
-	explicit World(sf::RenderWindow& window, FontHolder& font);
+	explicit World(sf::RenderWindow& window, FontHolder& font, SoundPlayer& sounds, bool networked = false);
 	void Update(sf::Time dt);
 	void Draw();
 	CommandQueue& GetCommandQueue();
