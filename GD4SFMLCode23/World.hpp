@@ -48,7 +48,6 @@ private:
 	sf::FloatRect m_world_bounds;
 	sf::Vector2f m_spawn_position;
 	Aircraft* m_player_aircraft;
-	Aircraft* m_player_aircraft2;
 	Countdown* m_countdown;
 };
 

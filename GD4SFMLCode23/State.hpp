@@ -26,7 +26,6 @@ public:
 		TextureHolder* textures;
 		FontHolder* fonts;
 		Player* player;
-		//Player* player2;
 	};
 
 public:

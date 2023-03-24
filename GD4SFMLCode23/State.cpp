@@ -8,7 +8,6 @@ State::Context::Context(sf::RenderWindow& window, TextureHolder& textures, FontH
 	, textures(&textures)
 	, fonts(&fonts)
 	, player(&player)
-	//, player2(&player2)
 {
 }
 
