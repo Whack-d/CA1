@@ -26,12 +26,6 @@ Player::Player()
     m_key_binding[sf::Keyboard::Up] = Action::kMoveUp;
     m_key_binding[sf::Keyboard::Down] = Action::kMoveDown;
 
-    //Player2
-    m_key_binding[sf::Keyboard::A] = Action::kMoveLeft2;
-    m_key_binding[sf::Keyboard::D] = Action::kMoveRight2;
-    m_key_binding[sf::Keyboard::W] = Action::kMoveUp2;
-    m_key_binding[sf::Keyboard::S] = Action::kMoveDown2;
-
     //Set initial action bindings
     InitializeActions();
 
@@ -39,16 +33,7 @@ Player::Player()
     for (auto& pair : m_action_binding)
     {
         pair.second.category = static_cast<unsigned int>(ReceiverCategories::kPlayerAircraft);
-    }
-
-    //Assign all categories to a player2
-    for (auto& pair : m_action_binding2)
-    {
-        pair.second.category = static_cast<unsigned int>(ReceiverCategories::kPlayerAircraft2);
-    }
-    
-    
-
+    }    
 }
 
 
@@ -130,10 +115,6 @@ bool Player::IsRealtimeAction(Action action)
     case Action::kMoveUp:
     case Action::kMoveLeft:
     case Action::kMoveRight:
-    case Action::kMoveDown2:
-    case Action::kMoveUp2:
-    case Action::kMoveLeft2:
-    case Action::kMoveRight2:
         return true;
     default:
         return false;

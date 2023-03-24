@@ -11,7 +11,6 @@ World::World(sf::RenderWindow& window, FontHolder& font)
 	,m_world_bounds(0.f, 0.f, m_camera.getSize().x, 2000.f)
 	,m_spawn_position(m_camera.getSize().x/2.f, m_world_bounds.height - m_camera.getSize().y/2.f)
 	,m_player_aircraft(nullptr)
-	,m_player_aircraft2(nullptr)
 	,m_countdown(nullptr)
 
 {
@@ -26,7 +25,6 @@ void World::Update(sf::Time dt)
 {
 	//TODO fix velocity
 	m_player_aircraft->SetVelocity(0.f, 0.f);
-	m_player_aircraft2->SetVelocity(0.f, 0.f);
 
 
 	//Forward the commands to the scenegraph, sort out velocity
@@ -35,19 +33,9 @@ void World::Update(sf::Time dt)
 		m_scenegraph.OnCommand(m_command_queue.Pop(), dt);
 	}
 	AdaptPlayerVelocity(m_player_aircraft);
-	AdaptPlayerVelocity(m_player_aircraft2);
 
 	m_scenegraph.Update(dt, m_command_queue);
 	AdaptPlayerPosition(m_player_aircraft);
-	AdaptPlayerPosition(m_player_aircraft2);
-
-	if (m_player_aircraft->hurtBox.intersects(m_player_aircraft2->hitBox)) {
-		m_player_aircraft->GainPoints(1);
-	}
-
-	if (m_player_aircraft2->hurtBox.intersects(m_player_aircraft->hitBox)) {
-		m_player_aircraft2->GainPoints(1);
-	}
 }
 
 void World::Draw()
@@ -97,16 +85,8 @@ void World::BuildScene()
 
 	m_scene_layers[static_cast<int>(Layers::kAir)]->AttachChild(std::move(leader));
 
-	//Add player 2 aircraft
-	std::unique_ptr<Aircraft> player2(new Aircraft(AircraftType::kCharacter2, m_textures, m_fonts));
-	m_player_aircraft2 = player2.get();
-	m_player_aircraft2->setPosition(sf::Vector2f(m_spawn_position.x + 100.f, m_spawn_position.y));
-
-	m_scene_layers[static_cast<int>(Layers::kAir)]->AttachChild(std::move(player2));
-
 	//Add their hitboxes
 	m_player_aircraft->SetHitbox(sf::Vector2f(100,100), sf::Vector2f(20, 20));
-	m_player_aircraft2->SetHitbox((sf::Vector2f(m_spawn_position.x + 100.f, m_spawn_position.y)), sf::Vector2f(20, 20));
 	
 	//Add countdown
 	std::unique_ptr<Countdown> countdown(new Countdown(m_fonts));
