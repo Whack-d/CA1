@@ -123,7 +123,7 @@ float Aircraft::FindMouse(sf::Vector2<int> mousePos, sf::RenderWindow& window)
 	float dx = newMousePos.x - mousePos.x;
 	float dy = newMousePos.y - mousePos.y;
 	float rotation = atan2f(dx, dy) * 180 / PI;
-	return rotation;
+	return -rotation;
 }
 
 void Aircraft::RotateSprite(float rotation)
