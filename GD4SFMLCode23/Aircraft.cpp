@@ -115,6 +115,22 @@ void Aircraft::UpdateMovementPattern(sf::Time dt)
 	}
 }
 
+float Aircraft::FindMouse(sf::Vector2<int> mousePos, sf::RenderWindow& window)
+{
+	sf::Vector2<int> newMousePos = window.mapCoordsToPixel(getPosition());
+
+	const float PI = 3.14159265;
+	float dx = newMousePos.x - mousePos.x;
+	float dy = newMousePos.y - mousePos.y;
+	float rotation = atan2f(dx, dy) * 180 / PI;
+	return -rotation;
+}
+
+void Aircraft::RotateSprite(float rotation)
+{
+	m_sprite.setRotation(rotation);
+}
+
 float Aircraft::GetMaxSpeed() const
 {
 	return Table[static_cast<int>(m_type)].m_speed;
@@ -139,3 +155,8 @@ void Aircraft::UpdateCurrent(sf::Time dt, CommandQueue& commands)
 	//Update hitbox and hurtbox
 	getTransform().transformRect(hitBox);
 }
+
+sf::Sprite Aircraft::GetSprite()
+{
+	return m_sprite;
+};

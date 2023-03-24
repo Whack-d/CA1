@@ -1,7 +1,6 @@
 #include "Player.hpp"
 #include "CommandQueue.hpp"
 #include "Aircraft.hpp"
-
 #include <map>
 #include <string>
 #include <algorithm>
@@ -45,7 +44,6 @@ void Player::HandleEvent(const sf::Event& event, CommandQueue& command)
         if (found != m_key_binding.end() && !IsRealtimeAction(found->second))
         {
             command.Push(m_action_binding[found->second]);
-            command.Push(m_action_binding2[found->second]);
         }
     }
 }
@@ -58,7 +56,6 @@ void Player::HandleRealtimeInput(CommandQueue& command)
         if (sf::Keyboard::isKeyPressed(pair.first) && IsRealtimeAction(pair.second))
         {
             command.Push(m_action_binding[pair.second]);
-            command.Push(m_action_binding2[pair.second]);
         }
     }
 }
@@ -98,13 +95,7 @@ void Player::InitializeActions()
     m_action_binding[Action::kMoveLeft].action = DerivedAction<Aircraft>(AircraftMover(-kPlayerSpeed, 0.f));
     m_action_binding[Action::kMoveRight].action = DerivedAction<Aircraft>(AircraftMover(kPlayerSpeed, 0.f));
     m_action_binding[Action::kMoveUp].action = DerivedAction<Aircraft>(AircraftMover(0.f, -kPlayerSpeed));
-    m_action_binding[Action::kMoveDown].action = DerivedAction<Aircraft>(AircraftMover(0.f, kPlayerSpeed));
-
-    m_action_binding2[Action::kMoveLeft2].action = DerivedAction<Aircraft>(AircraftMover(-kPlayerSpeed, 0.f));
-    m_action_binding2[Action::kMoveRight2].action = DerivedAction<Aircraft>(AircraftMover(kPlayerSpeed, 0.f));
-    m_action_binding2[Action::kMoveUp2].action = DerivedAction<Aircraft>(AircraftMover(0.f, -kPlayerSpeed));
-    m_action_binding2[Action::kMoveDown2].action = DerivedAction<Aircraft>(AircraftMover(0.f, kPlayerSpeed));
-    
+    m_action_binding[Action::kMoveDown].action = DerivedAction<Aircraft>(AircraftMover(0.f, kPlayerSpeed));    
 }
 
 bool Player::IsRealtimeAction(Action action)

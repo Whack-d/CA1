@@ -11,7 +11,7 @@
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-
+#include <SFML/Window/Mouse.hpp>
 
 #include <array>
 #include "CommandQueue.hpp"
