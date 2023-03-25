@@ -12,7 +12,7 @@ GameOverState::GameOverState(StateStack& stack, Context context)
 
     m_background_sprite.setTexture(texture);
 
-    auto menu_button = std::make_shared<GUI::Button>(*context.fonts, *context.textures);
+    auto menu_button = std::make_shared<GUI::Button>(context);
     menu_button->setPosition(400, 330);
     menu_button->SetText("Main Menu");
     menu_button->SetCallback([this]()
@@ -21,7 +21,7 @@ GameOverState::GameOverState(StateStack& stack, Context context)
             RequestStackPush(StateID::kMenu);
         });
 
-    auto exit_button = std::make_shared<GUI::Button>(*context.fonts, *context.textures);
+    auto exit_button = std::make_shared<GUI::Button>(context);
     exit_button->setPosition(400, 420);
     exit_button->SetText("Exit");
     exit_button->SetCallback([this]()

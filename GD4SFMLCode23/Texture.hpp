@@ -7,6 +7,7 @@ enum class Texture
 	kAvenger,
 	kMissile,
 	kTitleScreen,
+	kButtons,
 	kButtonNormal,
 	kButtonSelected,
 	kButtonPressed,

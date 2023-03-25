@@ -66,6 +66,16 @@ unsigned int Aircraft::GetCategory() const
 	}
 }
 
+int Aircraft::GetIdentifier()
+{
+	return m_identifier;
+}
+
+void Aircraft::SetIdentifier(int identifier)
+{
+	m_identifier = identifier;
+}
+
 void Aircraft::IncreaseFireRate()
 {
 	if (m_fire_rate < 5)
@@ -134,6 +144,11 @@ void Aircraft::RotateSprite(float rotation)
 float Aircraft::GetMaxSpeed() const
 {
 	return Table[static_cast<int>(m_type)].m_speed;
+}
+
+void Aircraft::Fire()
+{
+	//Fire Code
 }
 
 void Aircraft::SetHitbox(sf::Vector2f position, sf::Vector2f size)

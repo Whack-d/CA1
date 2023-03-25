@@ -14,6 +14,7 @@ namespace sf
 }
 class Player;
 class StateStack;
+class KeyBinding;
 
 
 class State
@@ -23,13 +24,15 @@ public:
 
 	struct Context
 	{
-		Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player, MusicPlayer& music, SoundPlayer& sounds);
+		Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, MusicPlayer& music, SoundPlayer& sounds, KeyBinding& keys1, KeyBinding& keys2);
 		sf::RenderWindow* window;
 		TextureHolder* textures;
 		FontHolder* fonts;
 		Player* player;
 		MusicPlayer* music;
 		SoundPlayer* sounds;
+		KeyBinding* keys1;
+		KeyBinding* keys2;
 		//Player* player2;
 	};
 
