@@ -70,7 +70,7 @@ namespace GUI
         {
             Deactivate();
         }
-        m_sounds.Play(SoundEffect::kButton);
+        //m_sounds.Play(SoundEffect::kButton);
     }
 
     void Button::Deactivate()
