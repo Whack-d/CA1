@@ -1,10 +1,13 @@
 #include "SceneNode.hpp"
 #include "ReceiverCategories.hpp"
 #include "Command.hpp"
+#include "Utility.hpp"
 #include <cassert>
 #include <memory>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
-SceneNode::SceneNode():m_children(), m_parent(nullptr)
+SceneNode::SceneNode(ReceiverCategories category):m_children(), m_parent(nullptr), m_default_category(category)
 {
 }
 
@@ -69,6 +72,7 @@ void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
     //Draw the node and children with changed transform
     DrawCurrent(target, states);
     DrawChildren(target, states);
+    sf::FloatRect rect = GetBoundingRect();
 }
 
 void SceneNode::DrawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
@@ -81,6 +85,18 @@ void SceneNode::DrawChildren(sf::RenderTarget& target, sf::RenderStates states) 
     for (const Ptr& child : m_children)
     {
         child->draw(target, states);
+    }
+}
+
+void SceneNode::CheckNodeCollision(SceneNode& node, std::set<Pair>& collision_pairs)
+{
+    if (this != &node && Collision(*this, node))
+    {
+        collision_pairs.insert(std::minmax(this, &node));
+    }
+    for (Ptr& child : m_children)
+    {
+        child->CheckNodeCollision(node, collision_pairs);
     }
 }
 
@@ -102,4 +118,39 @@ void SceneNode::OnCommand(const Command& command, sf::Time dt)
     {
         child->OnCommand(command, dt);
     }
+}
+
+sf::FloatRect SceneNode::GetBoundingRect() const
+{
+    return sf::FloatRect();
+}
+
+void SceneNode::DrawBoundingRect(sf::RenderTarget& target, sf::RenderStates states, sf::FloatRect& rect) const
+{
+    sf::RectangleShape shape;
+    shape.setPosition(sf::Vector2f(rect.left, rect.top));
+    shape.setSize(sf::Vector2f(rect.width, rect.height));
+    shape.setFillColor(sf::Color::Transparent);
+    shape.setOutlineColor(sf::Color::Green);
+    shape.setOutlineThickness(1.f);
+    target.draw(shape);
+}
+
+void SceneNode::CheckSceneCollision(SceneNode& scene_graph, std::set<Pair>& collision_pairs)
+{
+    CheckNodeCollision(scene_graph, collision_pairs);
+    for (Ptr& child : scene_graph.m_children)
+    {
+        CheckSceneCollision(*child, collision_pairs);
+    }
+}
+
+float Distance(const SceneNode& lhs, const SceneNode& rhs)
+{
+    return Utility::Length(lhs.GetWorldPosition() - rhs.GetWorldPosition());
+}
+
+bool Collision(const SceneNode& lhs, const SceneNode& rhs)
+{
+    return lhs.GetBoundingRect().intersects(rhs.GetBoundingRect());
 }

@@ -9,5 +9,6 @@ enum class Action
 	kMoveRight2,
 	kMoveUp2,
 	kMoveDown2,
+	kFireTrigger,
 	kActionCount
 };

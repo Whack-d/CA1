@@ -1,9 +1,12 @@
 #pragma once
 #include "StateID.hpp"
 #include "ResourceIdentifiers.hpp"
+#include "MusicPlayer.hpp"
+#include "SoundPlayer.hpp"
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
+#include <memory>
 
 namespace sf
 {
@@ -11,8 +14,8 @@ namespace sf
 }
 class Player;
 class StateStack;
+class KeyBinding;
 
-#include <memory>
 
 class State
 {
@@ -21,11 +24,16 @@ public:
 
 	struct Context
 	{
-		Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player);
+		Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, MusicPlayer& music, SoundPlayer& sounds, KeyBinding& keys1, KeyBinding& keys2);
 		sf::RenderWindow* window;
 		TextureHolder* textures;
 		FontHolder* fonts;
 		Player* player;
+		MusicPlayer* music;
+		SoundPlayer* sounds;
+		KeyBinding* keys1;
+		KeyBinding* keys2;
+		//Player* player2;
 	};
 
 public:

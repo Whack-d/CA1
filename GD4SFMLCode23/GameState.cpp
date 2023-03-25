@@ -1,12 +1,14 @@
 #include "GameState.hpp"
 #include "Player.hpp"
+#include <iostream>
 
 GameState::GameState(StateStack& stack, Context context)
     : State(stack, context)
-    , m_world(*context.window, *context.fonts)
-    , m_player(*context.player)
+    , m_world(*context.window, *context.fonts, *context.sounds, false)
+    , m_player(nullptr, 1, context.keys1)
     , gameIsOver(false)
 {
+    m_world.AddAircraft(1);
 }
 
 void GameState::Draw()
