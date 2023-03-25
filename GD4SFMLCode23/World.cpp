@@ -14,7 +14,7 @@ World::World(sf::RenderWindow& window, FontHolder& font, SoundPlayer& sounds, bo
 	,m_sounds(sounds)
 	,m_scenegraph()
 	,m_scene_layers()
-	,m_world_bounds(0.f, 0.f, m_camera.getSize().x, 2000.f)
+	,m_world_bounds(0.f, 0.f, m_camera.getSize().x, 5000.f)
 	,m_spawn_position(m_camera.getSize().x/2.f, m_world_bounds.height - m_camera.getSize().y/2.f)
 	,m_player_aircraft()
 	,m_networked_world(networked)
@@ -53,18 +53,8 @@ void World::Update(sf::Time dt)
 
 void World::Draw()
 {
-	if (PostEffect::IsSupported())
-	{
-		m_scene_texture.clear();
-		m_scene_texture.setView(m_camera);
-		m_scene_texture.draw(m_scenegraph);
-		m_scene_texture.display();
-	}
-	else
-	{
-		m_target.setView(m_camera);
-		m_target.draw(m_scenegraph);
-	}
+	m_target.setView(m_camera);
+	m_target.draw(m_scenegraph);
 }
 
 sf::FloatRect World::GetViewBounds() const

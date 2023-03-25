@@ -8,6 +8,7 @@ GameState::GameState(StateStack& stack, Context context)
     , m_player(nullptr, 1, context.keys1)
     , gameIsOver(false)
 {
+    m_world.AddAircraft(1);
 }
 
 void GameState::Draw()
