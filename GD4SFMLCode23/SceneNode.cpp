@@ -149,3 +149,8 @@ float Distance(const SceneNode& lhs, const SceneNode& rhs)
 {
     return Utility::Length(lhs.GetWorldPosition() - rhs.GetWorldPosition());
 }
+
+bool Collision(const SceneNode& lhs, const SceneNode& rhs)
+{
+    return lhs.GetBoundingRect().intersects(rhs.GetBoundingRect());
+}
