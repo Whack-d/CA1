@@ -9,7 +9,7 @@ std::vector<AircraftData> InitializeAircraftData()
     std::vector<AircraftData> data(static_cast<int>(AircraftType::kAircraftCount));
 
     data[static_cast<int>(AircraftType::kCharacter)].m_score = 0;
-    data[static_cast<int>(AircraftType::kCharacter)].m_speed = 200.f;
+    data[static_cast<int>(AircraftType::kCharacter)].m_speed = 2.f;
     data[static_cast<int>(AircraftType::kCharacter)].m_fire_interval = sf::seconds(1);
     data[static_cast<int>(AircraftType::kCharacter)].m_texture = Texture::kCharacter;
 
