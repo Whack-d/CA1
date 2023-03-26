@@ -41,7 +41,7 @@ MultiplayerGameState::MultiplayerGameState(StateStack& stack, Context context, b
 	, m_has_focus(true)
 	, m_host(is_host)
 	, m_game_started(false)
-	, m_client_timeout(sf::seconds(2.f))
+	, m_client_timeout(sf::seconds(60.f))
 	, m_time_since_last_packet(sf::Time::Zero)
 {
 	m_broadcast_text.setFont(context.fonts->Get(Font::kMain));

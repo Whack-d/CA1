@@ -6,6 +6,7 @@
 #include "Texture.hpp"
 #include "DataTables.hpp"
 #include "Utility.hpp"
+#include <iostream>
 
 namespace
 {
@@ -127,12 +128,13 @@ void Aircraft::UpdateMovementPattern(sf::Time dt)
 
 float Aircraft::FindMouse(sf::Vector2<int> mousePos, sf::RenderWindow& window)
 {
-	sf::Vector2<int> newMousePos = window.mapCoordsToPixel(getPosition());
-
+	sf::Vector2<int> playerPos = window.mapCoordsToPixel(getPosition());
 	const float PI = 3.14159265;
-	float dx = newMousePos.x - mousePos.x;
-	float dy = newMousePos.y - mousePos.y;
+	float dx = playerPos.x - mousePos.x;
+	float dy = playerPos.y - mousePos.y;
 	float rotation = atan2f(dx, dy) * 180 / PI;
+
+
 	return -rotation;
 }
 
