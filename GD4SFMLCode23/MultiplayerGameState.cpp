@@ -32,7 +32,7 @@ sf::IpAddress GetAddressFromFile()
 
 MultiplayerGameState::MultiplayerGameState(StateStack& stack, Context context, bool is_host) 
 	:State(stack, context)
-	, m_world(*context.window, *context.fonts, *context.sounds, is_host)
+	, m_world(*context.window, *context.fonts, *context.sounds, true)
 	, m_window(*context.window)
 	, m_texture_holder(*context.textures)
 	, m_connected(false)
@@ -41,7 +41,7 @@ MultiplayerGameState::MultiplayerGameState(StateStack& stack, Context context, b
 	, m_has_focus(true)
 	, m_host(is_host)
 	, m_game_started(false)
-	, m_client_timeout(sf::seconds(60.f))
+	, m_client_timeout(sf::seconds(900.f))
 	, m_time_since_last_packet(sf::Time::Zero)
 {
 	m_broadcast_text.setFont(context.fonts->Get(Font::kMain));

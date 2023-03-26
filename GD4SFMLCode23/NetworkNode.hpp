@@ -3,6 +3,7 @@
 #include "NetworkProtocol.hpp"
 
 #include <queue>
+#include <deque>
 
 class NetworkNode : public SceneNode
 {

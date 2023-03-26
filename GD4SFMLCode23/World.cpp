@@ -18,6 +18,7 @@ World::World(sf::RenderWindow& window, FontHolder& font, SoundPlayer& sounds, bo
 	,m_spawn_position(m_camera.getSize().x/2.f, m_world_bounds.height - m_camera.getSize().y/2.f)
 	,m_player_aircraft()
 	,m_networked_world(networked)
+	,m_network_node(nullptr)
 	,m_finish_sprite(nullptr)
 	,m_countdown(nullptr)
 
