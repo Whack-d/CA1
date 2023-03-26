@@ -5,6 +5,7 @@
 #include <SFML/Network/Packet.hpp>
 
 #include "Utility.hpp"
+#include <iostream>
 
 GameServer::RemotePeer::RemotePeer() :m_ready(false), m_timed_out(false)
 {
@@ -14,7 +15,7 @@ GameServer::RemotePeer::RemotePeer() :m_ready(false), m_timed_out(false)
 GameServer::GameServer(sf::Vector2f battlefield_size)
 	: m_thread(&GameServer::ExecutionThread, this)
 	, m_listening_state(false)
-	, m_client_timeout(sf::seconds(1.f))
+	, m_client_timeout(sf::seconds(10.f))
 	, m_max_connected_players(15)
 	, m_connected_players(0)
 	, m_world_height(5000)
@@ -257,6 +258,7 @@ void GameServer::HandleIncomingPackets()
 
 	if (detected_timeout)
 	{
+		std::cout << "PLAYER TIMEOUT" << std::endl;
 		HandleDisconnections();
 	}
 
@@ -361,7 +363,8 @@ void GameServer::HandleIncomingPacket(sf::Packet& packet, RemotePeer& receiving_
 		packet >> y;
 
 		//Enemy explodes, with a certain probability, drop a pickup
-		//To avoid multiple messages only listen to the first peer (host)
+		//To avoid multiple messages only listen to the first peer
+		
 		if (action == static_cast<int>(GameActions::Type::kEnemyExplode) && Utility::RandomInt(3) == 0 && &receiving_peer == m_peers[0].get())
 		{
 			sf::Packet packet;

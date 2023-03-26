@@ -8,6 +8,7 @@
 
 #include <fstream>
 #include "PickupType.hpp"
+#include <iostream>
 
 sf::IpAddress GetAddressFromFile()
 {
@@ -80,12 +81,15 @@ MultiplayerGameState::MultiplayerGameState(StateStack& stack, Context context, b
 		ip = GetAddressFromFile();
 	}
 
-	if (m_socket.connect(ip, SERVER_PORT, sf::seconds(5.f)) != sf::Socket::Done)
+	if (m_socket.connect(ip, SERVER_PORT, sf::seconds(5.f)) == sf::TcpSocket::Done)
 	{
 		m_connected = true;
+		std::cout << "Connected to Server. " << "IP: " << ip << " PORT: " << SERVER_PORT << " Remote Address: " << m_socket.getRemoteAddress() << std::endl;
 	}
 	else
 	{
+		std::cout << m_socket.getLocalPort() << std::endl;
+		std::cout << m_socket.getRemoteAddress() << std::endl;
 		m_failed_connection_clock.restart();
 	}
 

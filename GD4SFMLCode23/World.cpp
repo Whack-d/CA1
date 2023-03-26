@@ -179,9 +179,9 @@ void World::AdaptPlayerRotation()
 	{
 		//TODO fix mouse if getPosition doesn't work
 		sf::Vector2<int> mousePos = sf::Mouse::getPosition(m_window);
-		std::cout << aircraft->FindMouse(mousePos, m_window) << std::endl;
+		//std::cout << aircraft->FindMouse(mousePos, m_window) << std::endl;
 		aircraft->RotateSprite(aircraft->FindMouse(mousePos, m_window));
-		std::cout << aircraft->GetSprite().getRotation() << std::endl;
+		//std::cout << aircraft->GetSprite().getRotation() << std::endl;
 	}
 }
 
