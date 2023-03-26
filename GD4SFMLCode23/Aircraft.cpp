@@ -132,6 +132,10 @@ float Aircraft::FindMouse(sf::Vector2<int> mousePos, sf::RenderWindow& window)
 	const float PI = 3.14159265;
 	float dx = playerPos.x - mousePos.x;
 	float dy = playerPos.y - mousePos.y;
+	//std::cout << dx << " " << dy << std::endl;
+	if (window.getView().getCenter().y == 384) {
+		dy -= 4232;
+	}
 	float rotation = atan2f(dx, dy) * 180 / PI;
 
 
