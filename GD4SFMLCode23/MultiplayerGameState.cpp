@@ -41,7 +41,7 @@ MultiplayerGameState::MultiplayerGameState(StateStack& stack, Context context, b
 	, m_has_focus(true)
 	, m_host(is_host)
 	, m_game_started(false)
-	, m_client_timeout(sf::seconds(2.f))
+	, m_client_timeout(sf::seconds(60.f))
 	, m_time_since_last_packet(sf::Time::Zero)
 {
 	m_broadcast_text.setFont(context.fonts->Get(Font::kMain));
@@ -74,10 +74,11 @@ MultiplayerGameState::MultiplayerGameState(StateStack& stack, Context context, b
 	if (m_host)
 	{
 		m_game_server.reset(new GameServer(sf::Vector2f(m_window.getSize())));
-		ip = "127.0.0.1";
+		ip = "192.168.1.5";
 	}
 	else
 	{
+		std::cout << "Connecting to Host" << std::endl;
 		ip = GetAddressFromFile();
 	}
 
@@ -114,10 +115,11 @@ void MultiplayerGameState::Draw()
 			m_window.draw(m_broadcast_text);
 		}
 
-		if (m_local_player_identifiers.size() < 2 && m_player_invitation_time < sf::seconds(0.5f))
+		//Draw Custom Text here
+		/*if (m_local_player_identifiers.size() < 2 && m_player_invitation_time < sf::seconds(0.5f))
 		{
 			m_window.draw(m_player_invitation_text);
-		}
+		}*/
 	}
 	else
 	{
@@ -248,6 +250,7 @@ bool MultiplayerGameState::Update(sf::Time dt)
 	//Failed to connect and waited for more than 5 seconds: Back to menu
 	else if (m_failed_connection_clock.getElapsedTime() >= sf::seconds(5.f))
 	{
+		std::cout << "FAILED TO CONNECT" << std::endl;
 		RequestStackClear();
 		RequestStackPush(StateID::kMenu);
 	}
@@ -267,15 +270,8 @@ bool MultiplayerGameState::HandleEvent(const sf::Event& event)
 
 	if (event.type == sf::Event::KeyPressed)
 	{
-		//If enter pressed, add second player co-op only if there is only 1 player
-		if (event.key.code == sf::Keyboard::Return && m_local_player_identifiers.size() == 1)
-		{
-			sf::Packet packet;
-			packet << static_cast<sf::Int32>(Client::PacketType::kRequestCoopPartner);
-			m_socket.send(packet);
-		}
 		//If escape is pressed, show the pause screen
-		else if (event.key.code == sf::Keyboard::Escape)
+		if (event.key.code == sf::Keyboard::Escape)
 		{
 			DisableAllRealtimeActions();
 			RequestStackPush(StateID::kNetworkPause);
