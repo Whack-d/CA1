@@ -20,7 +20,7 @@ GameServer::GameServer(sf::Vector2f battlefield_size)
 	, m_connected_players(0)
 	, m_world_height(5000)
 	, m_battlefield_rect(0.f, m_world_height - battlefield_size.y, battlefield_size.x, battlefield_size.y)
-	, m_battlefield_scrollspeed(-50.f)
+	, m_battlefield_scrollspeed(0)
 	, m_aircraft_count(0)
 	, m_peers(1)
 	, m_aircraft_identifer_counter(1)
@@ -341,13 +341,9 @@ void GameServer::HandleIncomingPacket(sf::Packet& packet, RemotePeer& receiving_
 		for (sf::Int32 i = 0; i < num_aircraft; ++i)
 		{
 			sf::Int32 aircraft_identifier;
-			sf::Int32 aircraft_hitpoints;
-			sf::Int32 missile_ammo;
 			sf::Vector2f aircraft_position;
-			packet >> aircraft_identifier >> aircraft_position.x >> aircraft_position.y >> aircraft_hitpoints >> missile_ammo;
+			packet >> aircraft_identifier >> aircraft_position.x >> aircraft_position.y;
 			m_aircraft_info[aircraft_identifier].m_position = aircraft_position;
-			m_aircraft_info[aircraft_identifier].m_hitpoints = aircraft_hitpoints;
-			m_aircraft_info[aircraft_identifier].m_missile_ammo = missile_ammo;
 		}
 	}
 	break;
@@ -462,14 +458,48 @@ void GameServer::HandleDisconnections()
 
 void GameServer::InformWorldState(sf::TcpSocket& socket)
 {
+	sf::Packet packet;
+	packet << static_cast<sf::Int32>(Server::PacketType::kInitialState);
+	packet << m_world_height << m_battlefield_rect.top + m_battlefield_rect.height;
+	packet << static_cast<sf::Int32>(m_aircraft_count);
+
+	for (std::size_t i = 0; i < m_connected_players; ++i)
+	{
+		if (m_peers[i]->m_ready)
+		{
+			for (sf::Int32 identifier : m_peers[i]->m_aircraft_identifiers)
+			{
+				packet << identifier << m_aircraft_info[identifier].m_position.x << m_aircraft_info[identifier].m_position.y;
+			}
+		}
+	}
+
+	socket.send(packet);
 }
 
 void GameServer::BroadcastMessage(const std::string& message)
 {
+	sf::Packet packet;
+	packet << static_cast<sf::Int32>(Server::PacketType::kBroadcastMessage);
+	packet << message;
+	for (std::size_t i = 0; i < m_connected_players; ++i)
+	{
+		if (m_peers[i]->m_ready)
+		{
+			m_peers[i]->m_socket.send(packet);
+		}
+	}
 }
 
 void GameServer::SendToAll(sf::Packet& packet)
 {
+	for (PeerPtr& peer : m_peers)
+	{
+		if (peer->m_ready)
+		{
+			peer->m_socket.send(packet);
+		}
+	}
 }
 
 void GameServer::UpdateClientState()

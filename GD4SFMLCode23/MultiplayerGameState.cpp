@@ -409,7 +409,7 @@ void MultiplayerGameState::HandlePacket(sf::Int32 packet_type, sf::Packet& packe
 				sf::Int32 hitpoints;
 				sf::Int32 missile_ammo;
 				sf::Vector2f aircraft_position;
-				packet >> aircraft_identifier >> aircraft_position.x >> aircraft_position.y >> hitpoints >> missile_ammo;
+				packet >> aircraft_identifier >> aircraft_position.x >> aircraft_position.y;
 
 				Aircraft* aircraft = m_world.AddAircraft(aircraft_identifier);
 				aircraft->setPosition(aircraft_position);
