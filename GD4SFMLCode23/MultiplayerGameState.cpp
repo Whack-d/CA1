@@ -171,6 +171,15 @@ bool MultiplayerGameState::Update(sf::Time dt)
 			}
 		}
 
+		for (sf::Int32 identifier : m_local_player_identifiers)
+		{
+			if (Aircraft* aircraft = m_world.GetAircraft(identifier))
+			{
+				sf::Vector2<int> mousePos = sf::Mouse::getPosition(m_window);
+				aircraft->RotateSprite(aircraft->FindMouse(mousePos, m_window));
+			}
+		}
+
 		if (!found_local_plane && m_game_started)
 		{
 			RequestStackPush(StateID::kGameOver);

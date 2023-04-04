@@ -53,7 +53,7 @@ void World::Update(sf::Time dt)
 	//Aplly Movement
 	m_scenegraph.Update(dt, m_command_queue);
 	AdaptPlayerPosition();
-	AdaptPlayerRotation();
+	//AdaptPlayerRotation();
 }
 
 void World::Draw()
