@@ -101,6 +101,17 @@ MultiplayerGameState::MultiplayerGameState(StateStack& stack, Context context, b
 	//context.music->Play(MusicThemes::kMissionTheme);
 }
 
+MultiplayerGameState::~MultiplayerGameState()
+{
+	if (!m_host && m_connected)
+	{
+		//Inform server this client is dying
+		sf::Packet packet;
+		packet << static_cast<sf::Int32>(Client::PacketType::kQuit);
+		m_socket.send(packet);
+	}
+}
+
 void MultiplayerGameState::Draw()
 {
 	if (m_connected)
@@ -341,6 +352,7 @@ void MultiplayerGameState::HandlePacket(sf::Int32 packet_type, sf::Packet& packe
 {
 	switch (static_cast<Server::PacketType>(packet_type))
 	{
+
 		//Send message to all Clients
 		case Server::PacketType::kBroadcastMessage:
 		{

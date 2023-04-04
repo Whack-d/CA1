@@ -25,6 +25,8 @@ public:
 	float FindMouse(sf::Vector2<int> mousePos, sf::RenderWindow& window);
 	void RotateSprite(float rotation);
 	sf::Sprite GetSprite();
+	bool IsMarkedForRemoval() const;
+	void Destroy();
 
 private:
 	virtual void DrawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -34,6 +36,7 @@ private:
 	AircraftType m_type;
 	sf::Sprite m_sprite;
 
+	bool m_is_marked_for_removal;
 	unsigned int m_fire_rate;
 	unsigned int m_spread_level;
 	TextNode* m_score_display;

@@ -15,7 +15,7 @@ GameServer::RemotePeer::RemotePeer() :m_ready(false), m_timed_out(false)
 GameServer::GameServer(sf::Vector2f battlefield_size)
 	: m_thread(&GameServer::ExecutionThread, this)
 	, m_listening_state(false)
-	, m_client_timeout(sf::seconds(10.f))
+	, m_client_timeout(sf::seconds(1.f))
 	, m_max_connected_players(15)
 	, m_connected_players(0)
 	, m_world_height(5000)
@@ -273,6 +273,7 @@ void GameServer::HandleIncomingPacket(sf::Packet& packet, RemotePeer& receiving_
 	{
 	case Client::PacketType::kQuit:
 	{
+		std::cout << "KQUIT TRIGGERED" << std::endl;
 		receiving_peer.m_timed_out = true;
 		detected_timeout = true;
 	}
@@ -428,6 +429,7 @@ void GameServer::HandleDisconnections()
 			//Inform everyone of a disconnection, erase
 			for (sf::Int32 identifer : (*itr)->m_aircraft_identifiers)
 			{
+				std::cout << "Player disconnecting rn frfr" << std::endl;
 				SendToAll((sf::Packet() << static_cast<sf::Int32>(Server::PacketType::kPlayerDisconnect) << identifer));
 				m_aircraft_info.erase(identifer);
 			}

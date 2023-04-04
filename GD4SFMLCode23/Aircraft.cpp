@@ -37,6 +37,7 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 	: Entity(Table[static_cast<int>(type)].m_score)
 	, m_type(type) 
 	, m_sprite(textures.Get(ToTextureID(type)))
+	, m_is_marked_for_removal(false)
 	, m_fire_rate(1)
 	, m_spread_level(1)
 	, m_score_display(nullptr)
@@ -180,4 +181,12 @@ void Aircraft::UpdateCurrent(sf::Time dt, CommandQueue& commands)
 sf::Sprite Aircraft::GetSprite()
 {
 	return m_sprite;
-};
+}
+bool Aircraft::IsMarkedForRemoval() const
+{
+	return m_is_marked_for_removal;
+}
+void Aircraft::Destroy()
+{
+	m_is_marked_for_removal = true;
+}

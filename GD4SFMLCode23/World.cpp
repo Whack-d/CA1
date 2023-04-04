@@ -46,6 +46,10 @@ void World::Update(sf::Time dt)
 
 	HandleCollisions();
 
+	//RemoveWrecks() only destroys the entities, not the pointers in m_player_aircraft
+	auto first_to_remove = std::remove_if(m_player_aircraft.begin(), m_player_aircraft.end(), std::mem_fn(&Aircraft::IsMarkedForRemoval));
+	m_player_aircraft.erase(first_to_remove, m_player_aircraft.end());
+
 	//Aplly Movement
 	m_scenegraph.Update(dt, m_command_queue);
 	AdaptPlayerPosition();
@@ -265,6 +269,8 @@ void World::RemoveAircraft(int identifier)
 	Aircraft* aircraft = GetAircraft(identifier);
 	if (aircraft)
 	{
+		aircraft->Destroy();
+		std::cout << "Aircraft Destroyed" << std::endl;
 		m_player_aircraft.erase(std::find(m_player_aircraft.begin(), m_player_aircraft.end(), aircraft));
 	}
 }
